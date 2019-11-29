@@ -5,7 +5,7 @@ public Plugin myinfo =
 	name = "Fix Hint Color Messages",
 	description = "Исправляет форматирование для PrintHintText и PrintCenterText",
 	author = "Phoenix (˙·٠●Феникс●٠·˙) and Franc1sco Franug",
-	version = "1.0.1",
+	version = "1.0.2",
 	url = "zizt.ru hlmod.ru"
 };
 
@@ -69,13 +69,30 @@ void TextMsgFix(DataPack hPack)
 		iPlayers[i] = hPack.ReadCell();
 	}
 	
+	int[] newClients = new int[MaxClients];
+	int newTotal = 0;
+	
+	for (int i = 0; i < iCount; i++) {
+		int client = iPlayers[i];
+	
+		if (IsClientInGame(client)) {
+
+			newClients[newTotal] = client;
+			newTotal++;
+		}
+	}
+	  
+	if (newTotal == 0) {
+		return;
+	}
+	
 	static char sBuf[8192];
 	
 	hPack.ReadString(sBuf, sizeof sBuf);
 	
 	delete hPack;
 	
-	Protobuf hMessage = view_as<Protobuf>(StartMessageEx(g_TextMsg, iPlayers, iCount, USERMSG_RELIABLE|USERMSG_BLOCKHOOKS));
+	Protobuf hMessage = view_as<Protobuf>(StartMessageEx(g_TextMsg, newClients, newTotal, USERMSG_RELIABLE|USERMSG_BLOCKHOOKS));
 	
 	if(hMessage)
 	{
