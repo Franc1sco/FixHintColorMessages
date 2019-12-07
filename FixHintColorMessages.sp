@@ -1,16 +1,23 @@
 UserMsg g_TextMsg, g_HintText;
 
+static char g_sSpace[2048];
+
 public Plugin myinfo =
 {
 	name = "Fix Hint Color Messages",
-	description = "Исправляет форматирование для PrintHintText и PrintCenterText",
+	description = "Fix for PrintHintText and PrintCenterText colors msgs in csgo",
 	author = "Phoenix (˙·٠●Феникс●٠·˙) and Franc1sco Franug",
-	version = "1.0.2",
+	version = "1.1",
 	url = "zizt.ru hlmod.ru"
 };
 
 public void OnPluginStart()
 {
+	for(int i = 0; i < sizeof g_sSpace - 1; i++)
+	{
+		g_sSpace[i] = ' ';
+	}
+	
 	g_TextMsg = GetUserMessageId("TextMsg");
 	g_HintText = GetUserMessageId("HintText");
 	
@@ -20,7 +27,7 @@ public void OnPluginStart()
 
 Action TextMsgHintTextHook(UserMsg msg_id, Protobuf msg, const int[] players, int playersNum, bool reliable, bool init)
 {
-	static char sBuf[8192];
+	static char sBuf[sizeof g_sSpace];
 	
 	if(msg_id == g_HintText)
 	{
@@ -86,7 +93,7 @@ void TextMsgFix(DataPack hPack)
 		return;
 	}
 	
-	static char sBuf[8192];
+	static char sBuf[sizeof g_sSpace];
 	
 	hPack.ReadString(sBuf, sizeof sBuf);
 	
@@ -99,7 +106,7 @@ void TextMsgFix(DataPack hPack)
 		hMessage.SetInt("msg_dst", 4);
 		hMessage.AddString("params", "#SFUI_ContractKillStart");
 		
-		Format(sBuf, sizeof sBuf, "</font>%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", sBuf);
+		Format(sBuf, sizeof sBuf, "</font>%s%s", sBuf, g_sSpace);
 		hMessage.AddString("params", sBuf);
 		
 		hMessage.AddString("params", NULL_STRING);
