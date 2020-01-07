@@ -6,7 +6,7 @@ public Plugin myinfo =
 {
 	name = "Fix Hint Color Messages",
 	description = "Fix for PrintHintText and PrintCenterText colors msgs in csgo",
-	author = "Phoenix (˙·٠●Феникс●٠·˙) and Franc1sco Franug",
+	author = "Phoenix (˙·٠●Феникс●٠·˙)",
 	version = "1.1",
 	url = "zizt.ru hlmod.ru"
 };
