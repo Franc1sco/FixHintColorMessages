@@ -1,4 +1,4 @@
-UserMsg g_TextMsg, g_HintText;
+UserMsg g_TextMsg, g_HintText, g_KeyHintText;
 
 static char g_sSpace[2048];
 
@@ -7,7 +7,7 @@ public Plugin myinfo =
 	name = "Fix Hint Color Messages",
 	description = "Fix for PrintHintText and PrintCenterText colors msgs in csgo",
 	author = "Phoenix (˙·٠●Феникс●٠·˙)",
-	version = "1.2.0 Franc1sco franug github version",
+	version = "1.2.1 Franc1sco franug github version",
 	url = "https://github.com/Franc1sco/FixHintColorMessages"
 };
 
@@ -20,9 +20,11 @@ public void OnPluginStart()
 	
 	g_TextMsg = GetUserMessageId("TextMsg");
 	g_HintText = GetUserMessageId("HintText");
+	g_KeyHintText = GetUserMessageId("KeyHintText");
 	
 	HookUserMessage(g_TextMsg, TextMsgHintTextHook, true);
 	HookUserMessage(g_HintText, TextMsgHintTextHook, true);
+	HookUserMessage(g_KeyHintText, TextMsgHintTextHook, true);
 }
 
 Action TextMsgHintTextHook(UserMsg msg_id, Protobuf msg, const int[] players, int playersNum, bool reliable, bool init)
@@ -32,6 +34,10 @@ Action TextMsgHintTextHook(UserMsg msg_id, Protobuf msg, const int[] players, in
 	if(msg_id == g_HintText)
 	{
 		msg.ReadString("text", sBuf, sizeof sBuf);
+	}
+	else if(msg_id == g_KeyHintText)
+	{
+		msg.ReadString("hints", sBuf, sizeof sBuf, 0);
 	}
 	else if(msg.ReadInt("msg_dst") == 4)
 	{
