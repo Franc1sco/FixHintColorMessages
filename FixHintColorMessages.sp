@@ -7,7 +7,7 @@ public Plugin myinfo =
 	name = "Fix Hint Color Messages",
 	description = "Fix for PrintHintText and PrintCenterText colors msgs in csgo",
 	author = "Phoenix (˙·٠●Феникс●٠·˙)",
-	version = "1.2.1 Franc1sco franug github version",
+	version = "1.2.2 Franc1sco franug github version",
 	url = "https://github.com/Franc1sco/FixHintColorMessages"
 };
 
@@ -96,6 +96,7 @@ void TextMsgFix(DataPack hPack)
 	}
 	  
 	if (newTotal == 0) {
+		delete hPack;
 		return;
 	}
 	
